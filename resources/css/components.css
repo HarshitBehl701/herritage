@@ -1,0 +1,34 @@
+.section {
+    padding-block:var(--section-space);
+}
+
+.section-heading {
+    margin-bottom:clamp(35px,4vw,60px);
+}
+
+.section-subtitle {
+    display:block;
+    margin-bottom:clamp(10px,1vw,15px);
+    font-family:var(--font-primary);
+    font-size:var(--font-label);
+    line-height:var(--line-small);
+    font-weight:600;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--color-muted);
+}
+
+.section-title {
+    font-size:var(--font-h2);
+    line-height:var(--line-h2);
+    font-weight:500;
+    color:var(--color-primary);
+}
+
+.section-description {
+    margin-top:clamp(15px,1.5vw,22px);
+    max-width:700px;
+    color:var(--color-text-light);
+}
+
+/* section end */

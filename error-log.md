@@ -1,0 +1,19 @@
+# Error Log — Herritage Moulds
+
+| # | Date | Area | Error | Cause | Fix | Status |
+|---|------|------|-------|-------|-----|--------|
+| 1 | 2026-10-24 | Audit | PowerShell `php -r` one-liner failed on `[$w,$h]` | Shell quoting | Use temp PHP script | Resolved |
+| 2 | 2026-10-24 | Category/product/blog | 500: unknown column `sub_category_id` / missing `sub_categories` table | Slug resolver probes SubCategory even when `SUB_CATEGORY_REQUIRED=false` | Added `2026_10_24_000000_ensure_sub_category_schema` migration and made model relations conditional | Resolved |
+| 3 | 2026-10-24 | Category page | Product list empty | Relation serializes as `direct_products`, view read `directProducts` | Updated category view key | Resolved |
+| 4 | 2026-10-24 | Meta | og:image/twitter:image missing on detail pages | `$ogImage` section was not passed into the class component | Passed `og-image` from layout and added a component property | Resolved |
+| 5 | 2026-10-24 | WhatsApp CTA | Detail title missing from message | `$content` is not available inside class components | Added `whatsapp_detail` section and passed it to the component | Resolved |
+| 6 | 2026-10-24 | Location pages | `/delhi/our-presence` returned 410 | Page missing from `LOCATION_ALLOWED_PAGES` | Added `our-presence` to `.env` and `.env.example` | Resolved |
+| 7 | 2026-10-24 | Meta | Keywords showed unresolved `{location}` on non-location URLs | Formatter leaves placeholders when no location is present | Strip unresolved keyword phrases in the meta view and suppress keywords outside detail pages | Resolved |
+| 8 | 2026-10-24 | Meta | Location descriptions exceeded 140 characters | Formatter appends ` in {location}` | Remove the appended location suffix when the result would exceed 140 characters | Resolved |
+| 9 | 2026-10-24 | Pages/policies | About, contact, FAQ and policy copy rendered empty or double-nested | PageSeeder stored the whole page array while views and policy forms expect the inner content payload | Seed only `$content['content']` and reseed pages | Resolved |
+| 10 | 2026-10-24 | Meta | About and Contact titles included the brand | Static titles were `About Herritage Moulds` and `Contact Herritage Moulds` | Replaced with `About Our Moulded Cabinet and Enclosure Work` and `Contact Our Cabinet and Enclosure Team`; reseeded metas | Resolved |
+| 11 | 2026-10-24 | Our Presence | State cards linked to `/{state}/our-presence` instead of a `seo = 1` detail page | View hard-coded the location hub URL | Built state links from the first `seo = 1` category in `$commons`; all 13 links return 200 | Resolved |
+| 12 | 2026-10-24 | Product copy | Link insertion produced ungrammatical sentences | Replacement left fragments such as `Within the ... listing places`, `A glance through ...`, `On the lid lifts` and `The ... page, the curved...` | Rewrote the affected sentences in `products.php`, reseeded, and re-ran the 0/0/0/0 audit | Resolved |
+| 13 | 2026-10-24 | Meta | Location descriptions fell below 120 characters and long-location titles exceeded 60 | The fallback removed any trailing `in ...` phrase; three stored titles were too long for long state names | Targeted suffix removal in `meta-component`, shortened three titles, and rechecked 247 location URLs with 0 issues | Resolved |
+| 14 | 2026-10-24 | Media | Favicon PNG was served with `type="image/webp"` | Profile still pointed at `branding/favicon.png` while the head component declared WebP | Converted to `branding/favicon.webp`, updated `UserSeeder` and the profile row | Resolved |
+| 15 | 2026-10-24 | 410 test | Raw query-builder `seo` update returned 200 on a location URL | Direct updates bypass model cache invalidation | Re-tested with model `save()` plus `optimize:clear`; product and category both returned 410 and were restored to `seo = 1` | Resolved (test method) |

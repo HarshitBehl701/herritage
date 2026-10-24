@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Filament\Resources\Blogs\Pages;
+
+use App\Filament\Resources\Blogs\BlogResource;
+use App\Filament\Resources\Concerns\SwapsOrderOnUpdate;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Resources\Pages\EditRecord;
+
+class EditBlog extends EditRecord
+{
+    use SwapsOrderOnUpdate;
+
+    protected static string $resource = BlogResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
+        ];
+    }
+}
